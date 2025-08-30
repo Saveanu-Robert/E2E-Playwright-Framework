@@ -15,7 +15,7 @@ import type { EnvironmentConfig } from '../types/environment.types';
  */
 export const developmentConfig: EnvironmentConfig = {
   web: {
-    baseURL: process.env.DEV_WEB_URL || 'https://dev-app.example.com',
+    baseURL: process.env.DEV_WEB_URL || 'https://www.saucedemo.com',
     timeout: FRAMEWORK_CONSTANTS.TIMEOUTS.TEST_TIMEOUT.DEVELOPMENT,
     retries: FRAMEWORK_CONSTANTS.RETRIES.DEVELOPMENT,
   },
