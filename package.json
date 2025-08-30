@@ -1,0 +1,48 @@
+{
+  "name": "e2e-playwright-framework",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "npx playwright test",
+    "test:web": "npx playwright test tests/web",
+    "test:api": "npx playwright test tests/api",
+    "test:dev": "TEST_ENV=development npx playwright test",
+    "test:pre-prod": "TEST_ENV=pre-prod npx playwright test",
+    "test:prod": "TEST_ENV=prod npx playwright test",
+    "test:chromium": "npx playwright test --project=chromium-web",
+    "test:firefox": "npx playwright test --project=firefox-web",
+    "test:webkit": "npx playwright test --project=webkit-web",
+    "test:edge": "npx playwright test --project=edge-web",
+    "test:mobile": "npx playwright test --project=mobile-chrome --project=mobile-safari",
+    "test:desktop": "npx playwright test --project=chromium-web --project=firefox-web --project=webkit-web --project=edge-web",
+    "test:smoke": "npx playwright test tests/web/smoke",
+    "test:e2e": "npx playwright test tests/web/e2e",
+    "test:integration": "npx playwright test tests/web/integration tests/api/integration",
+    "test:contract": "npx playwright test tests/api/contract",
+    "test:functional": "npx playwright test tests/api/functional",
+    "test:sharded": "npx playwright test --shard=1/2",
+    "test:headed": "npx playwright test --headed",
+    "test:debug": "npx playwright test --debug",
+    "test:ui": "npx playwright test --ui",
+    "report": "npx playwright show-report ./reports/html",
+    "install:browsers": "npx playwright install",
+    "install:deps": "npx playwright install-deps"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Saveanu-Robert/E2E-Playwright-Framework.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Saveanu-Robert/E2E-Playwright-Framework/issues"
+  },
+  "homepage": "https://github.com/Saveanu-Robert/E2E-Playwright-Framework#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.55.0",
+    "@types/node": "^24.3.0"
+  }
+}

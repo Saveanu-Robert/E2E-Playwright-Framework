@@ -1,0 +1,90 @@
+
+# Dependencies
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+yarn.lock
+
+# Playwright Test Results & Reports
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+/reports/
+!/reports/.gitkeep
+
+# Screenshots and Videos (only keep failed test artifacts in CI)
+screenshots/
+videos/
+traces/
+
+# Environment Files (keep templates)
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# IDE Files
+.vscode/settings.json
+.vscode/launch.json
+.idea/
+*.swp
+*.swo
+*~
+
+# OS Files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Logs
+logs/
+*.log
+
+# Runtime data
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# Coverage directory used by tools like istanbul
+coverage/
+*.lcov
+
+# TypeScript
+*.tsbuildinfo
+.eslintcache
+
+# Temporary files
+tmp/
+temp/
+.tmp/
+
+# Build outputs
+dist/
+build/
+out/
+
+# Backup files
+*.bak
+*.backup
+*~
+
+# Test artifacts (development only)
+test-artifacts/
+debug-screenshots/
+debug-videos/
+
+# System performance logs
+performance-*.json
+
+# Local configuration overrides
+local.config.ts
+local.config.js
