@@ -88,3 +88,6 @@ performance-*.json
 # Local configuration overrides
 local.config.ts
 local.config.js
+
+# Playwright MCP directory
+.playwright-mcp/
