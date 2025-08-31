@@ -8,7 +8,19 @@ import { LoginPage } from '@pages/web/LoginPage';
 
 /**
  * Custom test fixtures for SauceDemo Web Testing
- * Provides pre-configured page objects and utilities
+ *
+ * Provides pre-configured page objects and utilities for testing
+ * Includes authenticated page fixture for tests requiring login
+ *
+ * @example
+ * ```typescript
+ * import { test, expect } from '@fixtures/web/saucedemo.fixture';
+ *
+ * test('should add product to cart', async ({ loginPage, inventoryPage, baseUrl }) => {
+ *   await loginPage.navigateToLoginPage(baseUrl);
+ *   // ... test implementation
+ * });
+ * ```
  */
 
 interface SauceDemoFixtures {
@@ -25,60 +37,50 @@ interface SauceDemoFixtures {
  */
 export const test = base.extend<SauceDemoFixtures>({
   /**
-   * Base URL fixture - gets environment-specific URL
+   * Base URL fixture - provides environment-specific URL configuration
    */
   baseUrl: async ({}, use) => {
     const envConfig = getEnvironmentConfig();
-    console.log(`🌍 Using base URL: ${envConfig.web.baseURL}`);
     await use(envConfig.web.baseURL);
   },
 
   /**
-   * Login Page fixture
+   * Login Page fixture - provides login functionality
    */
   loginPage: async ({ page }, use) => {
-    console.log('🏗️ Creating LoginPage fixture');
     const loginPage = new LoginPage(page);
     await use(loginPage);
-    console.log('🧹 LoginPage fixture cleanup completed');
   },
 
   /**
-   * Inventory Page fixture
+   * Inventory Page fixture - provides product browsing and cart functionality
    */
   inventoryPage: async ({ page }, use) => {
-    console.log('🏗️ Creating InventoryPage fixture');
     const inventoryPage = new InventoryPage(page);
     await use(inventoryPage);
-    console.log('🧹 InventoryPage fixture cleanup completed');
   },
 
   /**
-   * Cart Page fixture
+   * Cart Page fixture - provides shopping cart management
    */
   cartPage: async ({ page }, use) => {
-    console.log('🏗️ Creating CartPage fixture');
     const cartPage = new CartPage(page);
     await use(cartPage);
-    console.log('🧹 CartPage fixture cleanup completed');
   },
 
   /**
-   * Checkout Page fixture
+   * Checkout Page fixture - provides checkout process functionality
    */
   checkoutPage: async ({ page }, use) => {
-    console.log('🏗️ Creating CheckoutPage fixture');
     const checkoutPage = new CheckoutPage(page);
     await use(checkoutPage);
-    console.log('🧹 CheckoutPage fixture cleanup completed');
   },
 
   /**
    * Authenticated Page fixture - provides a page that's already logged in
+   * Uses standard user credentials for automatic authentication
    */
   authenticatedPage: async ({ page, baseUrl }, use) => {
-    console.log('🔐 Creating authenticated page fixture');
-
     // Import user data
     const { SAUCEDEMO_USERS } = await import('@data/testdata/saucedemo.users');
 
@@ -88,9 +90,7 @@ export const test = base.extend<SauceDemoFixtures>({
     await loginPage.login(SAUCEDEMO_USERS.STANDARD_USER);
     await loginPage.validateSuccessfulLogin();
 
-    console.log('✅ Authenticated page fixture ready');
     await use(page);
-    console.log('🧹 Authenticated page fixture cleanup completed');
   },
 });
 

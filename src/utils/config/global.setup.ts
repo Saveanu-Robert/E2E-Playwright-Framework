@@ -3,16 +3,20 @@ import type { FullConfig } from '@playwright/test';
 import { EnvironmentConfigManager } from '@config/environment';
 
 /**
- * Global Setup
+ * Global Test Setup
  *
- * Runs once before all tests across all workers
- * Purpose: Initialize shared resources, validate environment, setup global state
+ * Executed once before all tests across all workers
  *
- * @param _config - Playwright full configuration
+ * Features:
+ * - Environment validation and configuration
+ * - System resource optimization
+ * - Optional API health checks
+ * - Feature flag initialization
+ *
+ * @param _config - Playwright full configuration (unused)
  */
 async function globalSetup(_config: FullConfig) {
   const startTime = Date.now();
-  console.log('🚀 Starting Playwright Test Suite...');
 
   try {
     // Get current environment configuration
@@ -20,8 +24,9 @@ async function globalSetup(_config: FullConfig) {
     const envConfig = EnvironmentConfigManager.getConfig(currentEnv);
     const systemInfo = EnvironmentConfigManager.getSystemInfo();
 
-    // Log environment information
-    console.log('📍 Environment:', currentEnv);
+    // Log essential information
+    console.log('� Starting Playwright Test Suite...');
+    console.log('�📍 Environment:', currentEnv);
     console.log('🌐 Web Base URL:', envConfig.web.baseURL);
     console.log('🔗 API Base URL:', envConfig.api.baseURL);
     console.log('⚡ System Info:', {
@@ -44,10 +49,10 @@ async function globalSetup(_config: FullConfig) {
 
     if (envConfig.features.enableMocking) {
       console.log('🎭 Mocking enabled for external services');
-      // Initialize mock services here
+      // Initialize mock services here if needed
     }
 
-    // Health check for API endpoints (optional)
+    // Optional API health check
     if (process.env.SKIP_HEALTH_CHECK !== 'true') {
       await performHealthCheck(envConfig.api.baseURL);
     }
@@ -61,14 +66,14 @@ async function globalSetup(_config: FullConfig) {
 }
 
 /**
- * Perform health check on API endpoints
+ * Perform basic health check on API endpoints
+ * Does not fail tests if health check fails - only warns
  * @param apiBaseURL - API base URL to check
  */
 async function performHealthCheck(apiBaseURL: string): Promise<void> {
   try {
-    // Simple health check - adjust URL as needed
+    // Simple health check - adjust URL as needed for your API
     const healthEndpoint = `${apiBaseURL}/health`;
-    console.log(`🏥 Performing health check: ${healthEndpoint}`);
 
     const response = await fetch(healthEndpoint, {
       method: 'GET',

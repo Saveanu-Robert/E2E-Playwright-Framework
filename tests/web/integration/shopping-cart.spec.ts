@@ -211,7 +211,7 @@ test.describe('sauceDemo Integration Test - Shopping Cart Flow', () => {
     try {
       // Step 0: Navigate and login first
       TestLogger.logStep(0, 'Navigate to application and authenticate');
-      
+
       const envConfig = (await import('@config/environment')).getEnvironmentConfig();
       await loginPage.navigateToLoginPage(envConfig.web.baseURL);
       await loginPage.login(SAUCEDEMO_USERS.STANDARD_USER);

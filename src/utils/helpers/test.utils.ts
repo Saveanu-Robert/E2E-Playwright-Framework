@@ -1,6 +1,22 @@
 /**
  * Test Utilities for SauceDemo Testing
- * Common helper functions and utilities for test execution
+ *
+ * Comprehensive utility classes for test execution, page operations,
+ * data manipulation, assertions, and waiting scenarios.
+ *
+ * @example
+ * ```typescript
+ * import { PageUtils, DataUtils, AssertionUtils } from '@utils/helpers/test.utils';
+ *
+ * // Use page utilities
+ * await PageUtils.waitForPageLoad(page);
+ *
+ * // Generate test data
+ * const email = DataUtils.generateRandomEmail();
+ *
+ * // Enhanced assertions
+ * await AssertionUtils.assertElementReady(page, 'button', 'Submit Button');
+ * ```
  */
 
 import { expect, type Page } from '@playwright/test';
