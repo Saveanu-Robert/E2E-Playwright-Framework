@@ -1,17 +1,26 @@
 # 🎭 E2E Playwright Framework
 
-Enterprise-grade test automation framework built with Playwright, featuring dynamic performance optimization, multi-environment support, and comprehensive testing capabilities for both Web UI and API testing.
+Enterprise-grade test automation framework built with Playwright, featuring
+dynamic performance optimization, multi-environment support, and comprehensive
+testing capabilities for both Web UI and API testing.
 
 ## 🚀 Key Features
 
-- **🌍 Multi-Environment Support**: Development, Pre-production, and Production configurations
-- **⚡ Dynamic Performance Optimization**: Auto-calculated workers and shards based on system resources
-- **🌐 Cross-Browser Testing**: Desktop (Chrome, Firefox, Safari, Edge) and Mobile (Chrome, Safari, Tablet)
+- **🌍 Multi-Environment Support**: Development, Pre-production, and Production
+  configurations
+- **⚡ Dynamic Performance Optimization**: Auto-calculated workers and shards
+  based on system resources
+- **🌐 Cross-Browser Testing**: Desktop (Chrome, Firefox, Safari, Edge) and
+  Mobile (Chrome, Safari, Tablet)
 - **🔗 API Testing**: Dedicated API testing without browser overhead
 - **📸 Smart Artifacts**: Screenshots and videos only for failed web tests
-- **📊 Comprehensive Reporting**: HTML, JSON, JUnit reports with structured output
+- **📊 Comprehensive Reporting**: HTML, JSON, JUnit reports with structured
+  output
 - **🎯 TypeScript Path Mapping**: Optimized imports with clean architecture
 - **🔧 Enterprise Architecture**: Modular, scalable, and maintainable design
+- **✨ Code Quality**: ESLint v9 + Prettier with enterprise-level rules and
+  automated cleanup
+- **🧹 Auto Cleanup**: Automatic removal of unused imports and variables
 
 ## 📁 Project Structure
 
@@ -114,7 +123,8 @@ npm run report
 
 ## 📖 Documentation
 
-- [Configuration Guide](./docs/configuration.md) - Detailed configuration documentation
+- [Configuration Guide](./docs/configuration.md) - Detailed configuration
+  documentation
 - [Environment Setup](./config/README.md) - Environment configuration guide
 - [API Testing](./src/api/README.md) - API testing documentation
 - [Web Testing](./src/pages/README.md) - Web testing documentation
@@ -123,13 +133,13 @@ npm run report
 
 ### Environment Variables
 
-| Variable | Description | Default | Example |
-|----------|-------------|---------|---------|
-| `TEST_ENV` | Test environment | `development` | `pre-prod`, `prod` |
-| `CI` | CI/CD environment flag | `false` | `true` |
-| `DEBUG` | Enable debug logging | `false` | `1`, `true` |
-| `HEADLESS` | Override headless mode | `true` | `false` |
-| `SKIP_HEALTH_CHECK` | Skip API health check | `false` | `true` |
+| Variable            | Description            | Default       | Example            |
+| ------------------- | ---------------------- | ------------- | ------------------ |
+| `TEST_ENV`          | Test environment       | `development` | `pre-prod`, `prod` |
+| `CI`                | CI/CD environment flag | `false`       | `true`             |
+| `DEBUG`             | Enable debug logging   | `false`       | `1`, `true`        |
+| `HEADLESS`          | Override headless mode | `true`        | `false`            |
+| `SKIP_HEALTH_CHECK` | Skip API health check  | `false`       | `true`             |
 
 ### URL Configuration
 
@@ -175,42 +185,90 @@ The framework automatically optimizes performance based on your system:
 ## 🌐 Browser Support
 
 ### Desktop Browsers
+
 - ✅ Chromium (Chrome)
 - ✅ Firefox
 - ✅ WebKit (Safari)
 - ✅ Microsoft Edge
 
 ### Mobile Devices
+
 - ✅ Mobile Chrome (Pixel 5)
 - ✅ Mobile Safari (iPhone 12)
 - ✅ Tablet Chrome (iPad Pro)
 
 ## 📋 Test Scripts
 
-| Command | Description |
-|---------|-------------|
-| `npm run test` | Run all tests |
-| `npm run test:web` | Run web tests only |
-| `npm run test:api` | Run API tests only |
-| `npm run test:dev` | Run in development environment |
-| `npm run test:pre-prod` | Run in pre-production environment |
-| `npm run test:prod` | Run in production environment |
-| `npm run test:chromium` | Run Chrome tests only |
-| `npm run test:firefox` | Run Firefox tests only |
-| `npm run test:webkit` | Run Safari tests only |
-| `npm run test:edge` | Run Edge tests only |
-| `npm run test:mobile` | Run mobile browser tests |
-| `npm run test:desktop` | Run desktop browser tests |
-| `npm run test:smoke` | Run smoke tests |
-| `npm run test:e2e` | Run end-to-end tests |
-| `npm run test:integration` | Run integration tests |
-| `npm run test:contract` | Run contract tests |
-| `npm run test:functional` | Run functional API tests |
-| `npm run test:sharded` | Run with sharding |
-| `npm run test:headed` | Run in headed mode |
-| `npm run test:debug` | Run in debug mode |
-| `npm run test:ui` | Run with UI mode |
-| `npm run report` | Open HTML report |
+| Command                    | Description                       |
+| -------------------------- | --------------------------------- |
+| `npm run test`             | Run all tests                     |
+| `npm run test:web`         | Run web tests only                |
+| `npm run test:api`         | Run API tests only                |
+| `npm run test:dev`         | Run in development environment    |
+| `npm run test:pre-prod`    | Run in pre-production environment |
+| `npm run test:prod`        | Run in production environment     |
+| `npm run test:chromium`    | Run Chrome tests only             |
+| `npm run test:firefox`     | Run Firefox tests only            |
+| `npm run test:webkit`      | Run Safari tests only             |
+| `npm run test:edge`        | Run Edge tests only               |
+| `npm run test:mobile`      | Run mobile browser tests          |
+| `npm run test:desktop`     | Run desktop browser tests         |
+| `npm run test:smoke`       | Run smoke tests                   |
+| `npm run test:e2e`         | Run end-to-end tests              |
+| `npm run test:integration` | Run integration tests             |
+| `npm run test:contract`    | Run contract tests                |
+| `npm run test:functional`  | Run functional API tests          |
+| `npm run test:sharded`     | Run with sharding                 |
+| `npm run test:headed`      | Run in headed mode                |
+| `npm run test:debug`       | Run in debug mode                 |
+| `npm run test:ui`          | Run with UI mode                  |
+| `npm run report`           | Open HTML report                  |
+
+## 🧹 Code Quality & Linting
+
+The framework includes enterprise-level code quality tools with automated
+cleanup:
+
+### Available Commands
+
+| Command                | Description                                |
+| ---------------------- | ------------------------------------------ |
+| `npm run lint`         | Run ESLint and fix issues automatically    |
+| `npm run lint:fix`     | Same as lint - fix all auto-fixable issues |
+| `npm run lint:strict`  | Run ESLint with zero warnings tolerance    |
+| `npm run format`       | Format all files with Prettier             |
+| `npm run format:check` | Check if files are formatted correctly     |
+| `npm run code:clean`   | Run linting and formatting together        |
+| `npm run code:check`   | Check code quality without fixing          |
+
+### Code Quality Features
+
+- **ESLint v9**: Latest version with flat config format
+- **TypeScript Rules**: Strict TypeScript linting with type checking
+- **Playwright Rules**: Specialized rules for Playwright test best practices
+- **Unused Imports Cleanup**: Automatic removal of unused imports and variables
+- **Enterprise Rules**: Professional-grade code quality standards
+- **Prettier Integration**: Consistent code formatting across the project
+- **Pre-commit Ready**: Optimized for git hooks and CI/CD pipelines
+
+### Configuration Files
+
+- `eslint.config.js` - ESLint v9 flat configuration with TypeScript and
+  Playwright support
+- `.prettierrc` - Prettier formatting rules with enterprise standards
+- `tsconfig.json` - TypeScript configuration with path mappings
+
+### Code Quality Standards
+
+The framework enforces:
+
+- Maximum function complexity: 10 (15 for tests)
+- Maximum function length: 100 lines (150 for tests)
+- Maximum file length: 500 lines (800 for tests)
+- Maximum nesting depth: 4 levels
+- No unused variables or imports
+- Consistent TypeScript patterns
+- Playwright best practices
 
 ## 🤝 Contributing
 
@@ -226,4 +284,5 @@ This project is licensed under the ISC License.
 
 ## 📞 Support
 
-For questions and support, please open an issue in the [GitHub repository](https://github.com/Saveanu-Robert/E2E-Playwright-Framework/issues).
+For questions and support, please open an issue in the
+[GitHub repository](https://github.com/Saveanu-Robert/E2E-Playwright-Framework/issues).

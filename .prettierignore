@@ -1,0 +1,79 @@
+# Dependencies
+node_modules/
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Build outputs
+dist/
+build/
+out/
+.next/
+.nuxt/
+.output/
+.vercel/
+
+# Reports and logs
+reports/
+test-results/
+playwright-report/
+coverage/
+allure-results/
+allure-report/
+*.log
+*.log.*
+
+# Environment and config
+.env
+.env.*
+!.env.example
+
+# IDE and OS
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.temp
+*.cache
+.cache/
+
+# Generated files
+*.generated.*
+*.auto.*
+
+# Compiled binaries
+*.exe
+*.dll
+*.so
+*.dylib
+
+# Archives
+*.zip
+*.tar.gz
+*.rar
+
+# Documentation build
+docs/build/
+docs/.docusaurus/
+
+# Storybook
+storybook-static/
+
+# Testing artifacts
+screenshots/
+videos/
+downloads/
+traces/
+
+# Minified files
+*.min.js
+*.min.css
+
+# CHANGELOG (often auto-generated)
+CHANGELOG.md
