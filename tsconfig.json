@@ -31,9 +31,5 @@
     "data/**/*",
     "playwright.config.ts"
   ],
-  "exclude": [
-    "node_modules",
-    "reports",
-    "**/test-results"
-  ]
+  "exclude": ["node_modules", "reports", "**/test-results"]
 }

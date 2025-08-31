@@ -1,10 +1,11 @@
 import { defineConfig, devices } from '@playwright/test';
-import { EnvironmentConfigManager } from './config/environment';
-import { FRAMEWORK_CONSTANTS } from './src/utils/constants/framework.constants';
+
+import { EnvironmentConfigManager } from '@config/environment';
+import { FRAMEWORK_CONSTANTS } from '@src/utils/constants/framework.constants';
 
 /**
  * Enterprise Playwright Configuration
- * 
+ *
  * Features:
  * - Multi-environment support (development, pre-prod, prod)
  * - Dynamic performance optimization based on system resources
@@ -12,13 +13,13 @@ import { FRAMEWORK_CONSTANTS } from './src/utils/constants/framework.constants';
  * - Intelligent artifact collection (screenshots/videos only for failed web tests)
  * - API testing without browser overhead
  * - Comprehensive reporting
- * 
+ *
  * Environment Variables:
  * - TEST_ENV: Set environment (development|pre-prod|prod)
  * - CI: Enable CI-specific settings
  * - DEBUG: Enable debug mode
  * - HEADLESS: Override headless mode
- * 
+ *
  * @example
  * ```bash
  * TEST_ENV=production npm run test
@@ -32,7 +33,6 @@ const envConfig = EnvironmentConfigManager.getConfig(currentEnv);
 
 // Calculate optimal performance settings
 const workers = EnvironmentConfigManager.calculateOptimalWorkers();
-const shards = EnvironmentConfigManager.calculateOptimalShards();
 
 // Debug logging
 if (process.env[FRAMEWORK_CONSTANTS.ENV_VARS.DEBUG]) {
@@ -45,55 +45,64 @@ if (process.env[FRAMEWORK_CONSTANTS.ENV_VARS.DEBUG]) {
 
 export default defineConfig({
   testDir: FRAMEWORK_CONSTANTS.TEST_DIRS.WEB.replace('./', './'),
-  
+
   /* Performance Configuration */
   fullyParallel: true,
   workers: process.env[FRAMEWORK_CONSTANTS.ENV_VARS.CI] ? envConfig.performance.workers : workers,
-  
+
   /* Environment Configuration */
   timeout: envConfig.web.timeout,
   expect: {
     timeout: FRAMEWORK_CONSTANTS.TIMEOUTS.DEFAULT_ACTION,
   },
-  
+
   /* Retry Configuration */
   retries: envConfig.web.retries,
-  
+
   /* CI/CD Configuration */
   forbidOnly: !!process.env[FRAMEWORK_CONSTANTS.ENV_VARS.CI],
-  
+
   /* Reporting Configuration */
   reporter: [
-    ['html', { 
-      outputFolder: FRAMEWORK_CONSTANTS.REPORTS.HTML_DIR, 
-      open: 'never' 
-    }],
-    ['json', { 
-      outputFile: FRAMEWORK_CONSTANTS.REPORTS.JSON_FILE 
-    }],
-    ['junit', { 
-      outputFile: FRAMEWORK_CONSTANTS.REPORTS.JUNIT_FILE 
-    }],
+    [
+      'html',
+      {
+        outputFolder: FRAMEWORK_CONSTANTS.REPORTS.HTML_DIR,
+        open: 'never',
+      },
+    ],
+    [
+      'json',
+      {
+        outputFile: FRAMEWORK_CONSTANTS.REPORTS.JSON_FILE,
+      },
+    ],
+    [
+      'junit',
+      {
+        outputFile: FRAMEWORK_CONSTANTS.REPORTS.JUNIT_FILE,
+      },
+    ],
     ['list'],
   ],
-  
+
   /* Global Test Configuration */
   use: {
     baseURL: envConfig.web.baseURL,
     actionTimeout: FRAMEWORK_CONSTANTS.TIMEOUTS.DEFAULT_ACTION,
     navigationTimeout: FRAMEWORK_CONSTANTS.TIMEOUTS.DEFAULT_NAVIGATION,
-    
+
     /* Conditional headless mode */
     headless: process.env[FRAMEWORK_CONSTANTS.ENV_VARS.HEADLESS] !== 'false',
-    
+
     /* Screenshots and videos only for failed web tests */
     screenshot: 'only-on-failure',
     video: envConfig.features.enableVideoRecording ? 'retain-on-failure' : 'off',
-    
+
     /* Trace configuration */
     trace: 'retain-on-failure',
   },
-  
+
   /* Output directories */
   outputDir: FRAMEWORK_CONSTANTS.REPORTS.OUTPUT_DIR,
 
@@ -103,7 +112,7 @@ export default defineConfig({
     {
       name: 'chromium-web',
       testDir: FRAMEWORK_CONSTANTS.TEST_DIRS.WEB,
-      use: { 
+      use: {
         ...devices['Desktop Chrome'],
         baseURL: envConfig.web.baseURL,
         screenshot: 'only-on-failure',
@@ -118,7 +127,7 @@ export default defineConfig({
     {
       name: 'firefox-web',
       testDir: FRAMEWORK_CONSTANTS.TEST_DIRS.WEB,
-      use: { 
+      use: {
         ...devices['Desktop Firefox'],
         baseURL: envConfig.web.baseURL,
         screenshot: 'only-on-failure',
@@ -133,7 +142,7 @@ export default defineConfig({
     {
       name: 'webkit-web',
       testDir: FRAMEWORK_CONSTANTS.TEST_DIRS.WEB,
-      use: { 
+      use: {
         ...devices['Desktop Safari'],
         baseURL: envConfig.web.baseURL,
         screenshot: 'only-on-failure',
@@ -148,8 +157,8 @@ export default defineConfig({
     {
       name: 'edge-web',
       testDir: FRAMEWORK_CONSTANTS.TEST_DIRS.WEB,
-      use: { 
-        ...devices['Desktop Edge'], 
+      use: {
+        ...devices['Desktop Edge'],
         channel: 'msedge',
         baseURL: envConfig.web.baseURL,
         screenshot: 'only-on-failure',
@@ -166,7 +175,7 @@ export default defineConfig({
     {
       name: 'mobile-chrome',
       testDir: FRAMEWORK_CONSTANTS.TEST_DIRS.WEB,
-      use: { 
+      use: {
         ...devices['Pixel 5'],
         baseURL: envConfig.web.baseURL,
         screenshot: 'only-on-failure',
@@ -181,7 +190,7 @@ export default defineConfig({
     {
       name: 'mobile-safari',
       testDir: FRAMEWORK_CONSTANTS.TEST_DIRS.WEB,
-      use: { 
+      use: {
         ...devices['iPhone 12'],
         baseURL: envConfig.web.baseURL,
         screenshot: 'only-on-failure',
@@ -196,7 +205,7 @@ export default defineConfig({
     {
       name: 'tablet-chrome',
       testDir: FRAMEWORK_CONSTANTS.TEST_DIRS.WEB,
-      use: { 
+      use: {
         ...devices['iPad Pro'],
         baseURL: envConfig.web.baseURL,
         screenshot: 'only-on-failure',
@@ -216,7 +225,7 @@ export default defineConfig({
       use: {
         baseURL: envConfig.api.baseURL,
         extraHTTPHeaders: envConfig.api.headers,
-        
+
         /* Disable browser and visual artifacts for API tests */
         browserName: undefined,
         headless: undefined,
