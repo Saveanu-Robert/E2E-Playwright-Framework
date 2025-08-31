@@ -27,15 +27,12 @@ export class InventoryPage {
 
   /**
    * Validate successful navigation to inventory page
+   * Ensures page URL, title, and main container are loaded correctly
    */
   async validateInventoryPageLoad(): Promise<void> {
-    console.log('🔍 Validating inventory page load');
-
     await expect(this.page).toHaveURL(/.*inventory\.html/);
     await expect(this.pageTitle).toHaveText('Products');
     await expect(this.inventoryContainer).toBeVisible();
-
-    console.log('✅ Inventory page loaded successfully');
   }
 
   /**
@@ -94,64 +91,56 @@ export class InventoryPage {
   }
 
   /**
-   * Add a product to cart
+   * Add a product to cart with mobile device compatibility
+   * Handles DOM state changes and ensures reliable cart interaction
    * @param product - Product data to add to cart
    */
   async addProductToCart(product: ProductData): Promise<void> {
-    console.log(`🛒 Adding product to cart: ${product.name}`);
-
     const addToCartButton = this.getAddToCartButton(product.id);
     await expect(addToCartButton).toBeVisible();
     await expect(addToCartButton).toHaveText('Add to cart');
 
-    // Wait for button to be ready and stable before clicking
+    // Ensure button stability before interaction
     await addToCartButton.waitFor({ state: 'visible', timeout: 10000 });
     await addToCartButton.waitFor({ state: 'attached', timeout: 10000 });
 
-    // Add small delay for mobile devices to ensure DOM is stable
+    // Small delay for mobile device DOM stability
     await this.page.waitForTimeout(50);
 
-    // Use force click for mobile devices to avoid interaction issues
+    // Force click for mobile device compatibility
     await addToCartButton.click({ force: true, timeout: 30000 });
 
-    // Wait for DOM update to complete using comprehensive strategy
+    // Wait for DOM update to complete
     await this.waitForButtonStateChange(product.id);
 
     // Additional validation for mobile safari
     const removeButton = this.getRemoveButton(product.id);
     await expect(removeButton).toHaveText('Remove', { timeout: 30000 });
-
-    console.log(`✅ Product added to cart successfully: ${product.name}`);
   }
 
   /**
-   * Remove a product from cart
+   * Remove a product from cart with mobile device compatibility
    * @param product - Product data to remove from cart
    */
   async removeProductFromCart(product: ProductData): Promise<void> {
-    console.log(`🗑️ Removing product from cart: ${product.name}`);
-
     const removeButton = this.getRemoveButton(product.id);
     await expect(removeButton).toBeVisible({ timeout: 30000 });
     await expect(removeButton).toHaveText('Remove', { timeout: 30000 });
 
-    // Use force click for mobile devices
+    // Force click for mobile device compatibility
     await removeButton.click({ force: true, timeout: 30000 });
 
     // Wait for state change back to add to cart
     await this.waitForAddButtonRestore(product.id);
-
-    console.log(`✅ Product removed from cart successfully: ${product.name}`);
   }
 
   /**
-   * Validate product information on the page
+   * Validate product information is displayed correctly on the page
+   * Checks product name, description, price, and image
    * @param product - Product data to validate
    */
   async validateProductInformation(product: ProductData): Promise<void> {
-    console.log(`🔍 Validating product information: ${product.name}`);
-
-    // Find the product by name using a more flexible approach
+    // Find the product by name using a flexible approach
     const productNameElement = this.page
       .locator(`[data-test="inventory-item-name"]`)
       .filter({ hasText: product.name });
@@ -172,23 +161,18 @@ export class InventoryPage {
     const productImage = productContainer.locator('.inventory_item_img img');
     await expect(productImage).toBeVisible();
     await expect(productImage).toHaveAttribute('alt', product.name);
-
-    console.log(`✅ Product information validated: ${product.name}`);
   }
 
   /**
-   * Get current cart item count
-   * @returns Number of items in cart
+   * Get current cart item count from badge
+   * @returns Number of items in cart (0 if badge not visible)
    */
   async getCartItemCount(): Promise<number> {
     try {
       if (await this.shoppingCartBadge.isVisible()) {
         const badgeText = await this.shoppingCartBadge.textContent();
-        const count = parseInt(badgeText ?? '0', 10);
-        console.log(`ℹ️ Cart item count: ${count}`);
-        return count;
+        return parseInt(badgeText ?? '0', 10);
       }
-      console.log('ℹ️ Cart is empty (no badge visible)');
       return 0;
     } catch {
       return 0;
@@ -196,89 +180,68 @@ export class InventoryPage {
   }
 
   /**
-   * Validate cart badge count
+   * Validate cart badge displays correct count
+   * For count > 0: verifies badge is visible with correct text
+   * For count = 0: verifies badge is hidden
    * @param expectedCount - Expected number of items in cart
    */
   async validateCartItemCount(expectedCount: number): Promise<void> {
-    console.log(`🔍 Validating cart item count: ${expectedCount}`);
-
     if (expectedCount > 0) {
       await expect(this.shoppingCartBadge).toBeVisible();
       await expect(this.shoppingCartBadge).toHaveText(expectedCount.toString());
-      console.log(`✅ Cart badge shows correct count: ${expectedCount}`);
     } else {
       await expect(this.shoppingCartBadge).not.toBeVisible();
-      console.log('✅ Cart badge is hidden (empty cart)');
     }
   }
 
   /**
-   * Navigate to shopping cart
+   * Navigate to shopping cart page
    */
   async navigateToCart(): Promise<void> {
-    console.log('🛒 Navigating to shopping cart');
     await this.shoppingCartLink.click();
     await expect(this.page).toHaveURL(/.*cart\.html/);
-    console.log('✅ Successfully navigated to cart page');
   }
 
   /**
-   * Sort products by option
+   * Sort products by specified option
    * @param sortOption - Sort option value (az, za, lohi, hilo)
    */
   async sortProducts(sortOption: 'az' | 'za' | 'lohi' | 'hilo'): Promise<void> {
-    console.log(`📊 Sorting products by: ${sortOption}`);
-
     await this.sortDropdown.selectOption(sortOption);
-
-    // Validate selection
+    // Validate selection was applied
     await expect(this.sortDropdown).toHaveValue(sortOption);
-
-    console.log(`✅ Products sorted by: ${sortOption}`);
   }
 
   /**
-   * Get all visible product names in order
-   * @returns Array of product names
+   * Get all visible product names in current display order
+   * @returns Array of product names as they appear on page
    */
   async getAllProductNames(): Promise<string[]> {
-    console.log('📋 Getting all product names');
-
     const productNames = await this.page.locator('.inventory_item_name').allTextContents();
-
-    console.log(`ℹ️ Found ${productNames.length} products: ${productNames.join(', ')}`);
     return productNames;
   }
 
   /**
-   * Get all visible product prices in order
-   * @returns Array of product prices as numbers
+   * Get all visible product prices in current display order
+   * @returns Array of product prices as numbers (without $ symbol)
    */
   async getAllProductPrices(): Promise<number[]> {
-    console.log('💰 Getting all product prices');
-
     const priceTexts = await this.page.locator('.inventory_item_price').allTextContents();
-    const prices = priceTexts.map(price => parseFloat(price.replace('$', '')));
-
-    console.log(`ℹ️ Found ${prices.length} prices: ${prices.join(', ')}`);
-    return prices;
+    return priceTexts.map(price => parseFloat(price.replace('$', '')));
   }
 
   /**
-   * Validate products are sorted correctly
+   * Validate products are sorted correctly by specified criteria
    * @param sortType - Type of sorting to validate
    */
   async validateProductSorting(
     sortType: 'name-asc' | 'name-desc' | 'price-asc' | 'price-desc',
   ): Promise<void> {
-    console.log(`🔍 Validating product sorting: ${sortType}`);
-
     switch (sortType) {
       case 'name-asc': {
         const namesAsc = await this.getAllProductNames();
         const sortedNamesAsc = [...namesAsc].sort();
         expect(namesAsc).toEqual(sortedNamesAsc);
-        console.log('✅ Products sorted by name (A-Z) correctly');
         break;
       }
 
@@ -286,7 +249,6 @@ export class InventoryPage {
         const namesDesc = await this.getAllProductNames();
         const sortedNamesDesc = [...namesDesc].sort().reverse();
         expect(namesDesc).toEqual(sortedNamesDesc);
-        console.log('✅ Products sorted by name (Z-A) correctly');
         break;
       }
 
@@ -294,7 +256,6 @@ export class InventoryPage {
         const pricesAsc = await this.getAllProductPrices();
         const sortedPricesAsc = [...pricesAsc].sort((a, b) => a - b);
         expect(pricesAsc).toEqual(sortedPricesAsc);
-        console.log('✅ Products sorted by price (low to high) correctly');
         break;
       }
 
@@ -302,23 +263,18 @@ export class InventoryPage {
         const pricesDesc = await this.getAllProductPrices();
         const sortedPricesDesc = [...pricesDesc].sort((a, b) => b - a);
         expect(pricesDesc).toEqual(sortedPricesDesc);
-        console.log('✅ Products sorted by price (high to low) correctly');
         break;
       }
     }
   }
 
   /**
-   * Click on product name to view details
+   * Click on product name to view detailed product page
    * @param product - Product to view details
    */
   async viewProductDetails(product: ProductData): Promise<void> {
-    console.log(`👁️ Viewing product details: ${product.name}`);
-
     const productNameLink = this.getProductNameLink(product.id);
     await productNameLink.click();
-
     await expect(this.page).toHaveURL(/.*inventory-item\.html/);
-    console.log(`✅ Navigated to product details: ${product.name}`);
   }
 }

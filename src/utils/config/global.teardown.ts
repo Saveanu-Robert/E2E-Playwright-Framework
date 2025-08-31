@@ -3,12 +3,17 @@ import type { FullConfig } from '@playwright/test';
 import { EnvironmentConfigManager } from '@config/environment';
 
 /**
- * Global Teardown
+ * Global Test Teardown
  *
- * Runs once after all tests across all workers
- * Purpose: Cleanup shared resources, generate reports, perform final cleanup
+ * Executed once after all tests across all workers complete
  *
- * @param _config - Playwright full configuration
+ * Features:
+ * - Environment-specific cleanup
+ * - Temporary file cleanup
+ * - Debug report generation
+ * - Resource cleanup
+ *
+ * @param _config - Playwright full configuration (unused)
  */
 async function globalTeardown(_config: FullConfig) {
   const startTime = Date.now();
@@ -21,13 +26,13 @@ async function globalTeardown(_config: FullConfig) {
     // Environment-specific cleanup
     if (envConfig.features.enableMocking) {
       console.log('🎭 Cleaning up mock services...');
-      // Cleanup mock services here
+      // Cleanup mock services here if implemented
     }
 
     // Cleanup temporary files
     await cleanupTempFiles();
 
-    // Generate additional reports if needed
+    // Generate debug report if debug mode enabled
     if (envConfig.features.enableDebugLogs) {
       await generateDebugReport();
     }
@@ -43,12 +48,12 @@ async function globalTeardown(_config: FullConfig) {
 }
 
 /**
- * Cleanup temporary files and directories
+ * Cleanup temporary files and directories created during test execution
  */
 async function cleanupTempFiles(): Promise<void> {
   try {
     console.log('🗑️ Cleaning up temporary files...');
-    // Add cleanup logic for temporary files
+    // Add cleanup logic for temporary files as needed
     // Example: fs.rmSync(tempDir, { recursive: true, force: true });
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : String(error);
@@ -57,7 +62,7 @@ async function cleanupTempFiles(): Promise<void> {
 }
 
 /**
- * Generate debug report with system information
+ * Generate comprehensive debug report with system and environment information
  */
 async function generateDebugReport(): Promise<void> {
   try {
@@ -71,7 +76,7 @@ async function generateDebugReport(): Promise<void> {
       playwrightVersion: require('@playwright/test/package.json').version,
     };
 
-    // Save debug info to file
+    // Save debug info to reports directory
     const fs = require('node:fs').promises;
     await fs.writeFile('./reports/debug-info.json', JSON.stringify(debugInfo, null, 2));
     console.log('📋 Debug report saved to ./reports/debug-info.json');
