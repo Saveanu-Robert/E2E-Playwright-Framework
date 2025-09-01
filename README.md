@@ -414,10 +414,6 @@ We welcome contributions from the community! Here's how you can help:
 - 🎨 **Page Objects**: Add new page object models
 - 🧪 **Test Cases**: Contribute new test scenarios
 
-## 📄 License
-
-This project is licensed under the **ISC License**.
-
 ### What This Means
 
 - ✅ **Commercial Use**: Use in commercial projects freely
