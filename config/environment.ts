@@ -1,3 +1,43 @@
+/**
+ * @fileoverview Environment Configuration Manager - Central configuration management system
+ * @version 1.0.0
+ * @author E2E Playwright Framework Team
+ * @since 2024
+ *
+ * @description
+ * This module provides comprehensive environment configuration management for the testing framework.
+ * It includes dynamic resource optimization, environment validation, and type-safe configuration access
+ * with support for multiple environments (development, pre-production, production).
+ *
+ * Key Features:
+ * - Dynamic worker calculation based on system resources (CPU, memory)
+ * - Environment-specific configuration with validation
+ * - Performance optimization algorithms
+ * - Type-safe configuration access
+ * - System resource monitoring and reporting
+ * - Flexible environment detection and override
+ *
+ * @example
+ * ```typescript
+ * import { EnvironmentConfigManager, getEnvironmentConfig } from '@config/environment';
+ *
+ * // Get configuration for specific environment
+ * const config = getEnvironmentConfig('development');
+ * const baseUrl = config.web.baseURL;
+ *
+ * // Get optimal worker count for performance
+ * const workers = EnvironmentConfigManager.calculateOptimalWorkers();
+ *
+ * // System information for debugging
+ * const systemInfo = EnvironmentConfigManager.getSystemInfo();
+ * ```
+ *
+ * @see {@link ./environments/development.ts} - Development environment configuration
+ * @see {@link ./environments/pre-prod.ts} - Pre-production environment configuration
+ * @see {@link ./environments/prod.ts} - Production environment configuration
+ * @see {@link ./types/environment.types.ts} - Type definitions
+ */
+
 import * as os from 'node:os';
 
 import { FRAMEWORK_CONSTANTS } from '@src/utils/constants/framework.constants';
@@ -9,26 +49,24 @@ import type {
   EnvironmentManager,
   EnvironmentType,
 } from '@config/types/environment.types';
-
 /**
- * Environment Configuration Manager
+ * Environment Configuration Manager Implementation
  *
- * Central manager for environment-specific configurations with dynamic optimization
- * Features:
- * - Dynamic worker calculation based on system resources
- * - Environment validation
- * - Performance optimization
- * - Type-safe configuration access
+ * @description
+ * Core implementation of the environment management system providing configuration
+ * access, validation, and system resource optimization. Implements the EnvironmentManager
+ * interface with comprehensive error handling and performance monitoring.
  *
- * @example
- * ```typescript
- * import { EnvironmentConfigManager } from '@config/environment';
- *
- * const config = EnvironmentConfigManager.getConfig('development');
- * const workers = EnvironmentConfigManager.calculateOptimalWorkers();
- * ```
+ * @implements {EnvironmentManager}
+ * @class
+ * @since 1.0.0
  */
 class EnvironmentConfigManagerImpl implements EnvironmentManager {
+  /**
+   * Registry of all available environment configurations
+   * @private
+   * @readonly
+   */
   private readonly configs: Record<EnvironmentType, EnvironmentConfig> = {
     development: developmentConfig,
     'pre-prod': preProdConfig,
@@ -36,13 +74,29 @@ class EnvironmentConfigManagerImpl implements EnvironmentManager {
   };
 
   /**
-   * Get configuration for specific environment
-   * @param env - Environment type
-   * @returns Environment configuration
+   * Retrieves configuration for the specified environment
+   *
+   * @description
+   * Returns environment-specific configuration with automatic validation.
+   * Falls back to default environment if no environment is specified.
+   *
+   * @param {EnvironmentType} [env] - Target environment type
+   * @returns {EnvironmentConfig} Validated environment configuration
+   *
+   * @throws {Error} When environment configuration is not found or invalid
+   *
+   * @example
+   * ```typescript
+   * const devConfig = EnvironmentConfigManager.getConfig('development');
+   * const defaultConfig = EnvironmentConfigManager.getConfig(); // Uses default
+   * ```
+   *
+   * @public
+   * @since 1.0.0
    */
   getConfig(env: EnvironmentType = FRAMEWORK_CONSTANTS.DEFAULT_ENVIRONMENT): EnvironmentConfig {
     const config = this.configs[env];
-    if (!config) {
+    if (!(env in this.configs)) {
       throw new Error(`Environment configuration not found for: ${env}`);
     }
 
@@ -52,14 +106,29 @@ class EnvironmentConfigManagerImpl implements EnvironmentManager {
   }
 
   /**
-   * Get current environment from environment variables
-   * @returns Current environment type
+   * Detects the current environment from environment variables
+   *
+   * @description
+   * Reads the TEST_ENV environment variable to determine the current environment.
+   * Falls back to the default environment if variable is not set or invalid.
+   *
+   * @returns {EnvironmentType} Current environment type
+   *
+   * @example
+   * ```typescript
+   * const currentEnv = EnvironmentConfigManager.getCurrentEnvironment();
+   * console.log('Running tests in:', currentEnv);
+   * ```
+   *
+   * @public
+   * @since 1.0.0
    */
   getCurrentEnvironment(): EnvironmentType {
     const env = process.env[FRAMEWORK_CONSTANTS.ENV_VARS.TEST_ENV] as EnvironmentType;
-    return env && Object.keys(this.configs).includes(env)
-      ? env
-      : FRAMEWORK_CONSTANTS.DEFAULT_ENVIRONMENT;
+    if (env && Object.keys(this.configs).includes(env)) {
+      return env;
+    }
+    return FRAMEWORK_CONSTANTS.DEFAULT_ENVIRONMENT;
   }
 
   /**
