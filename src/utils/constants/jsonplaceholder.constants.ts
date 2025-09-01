@@ -19,7 +19,8 @@
 
 export const JSONPLACEHOLDER_API = {
   // Base Configuration
-  BASE_URL: 'https://jsonplaceholder.typicode.com',
+  // Prefer environment override; fall back to public endpoint
+  BASE_URL: process.env.JSONPLACEHOLDER_URL ?? 'https://jsonplaceholder.typicode.com',
 
   // API Endpoints
   ENDPOINTS: {

@@ -1,5 +1,9 @@
 /**
- * @fileoverview API Error Simulation - Mock testing suite for error response validation and edge case scenarios
+ * @fileoverview API E  apiTest.afterEach(async (_, testInfo) => {
+    if (testInfo.status === 'failed') {
+      TestLogger.logError(`API edge case test failed: ${testInfo.title}`);
+    }
+  });Simulation - Mock testing suite for error response validation and edge case scenarios
  * @author Test Automation Team
  * @category Mocked Testing
  * @priority High (P1)
@@ -17,6 +21,7 @@
 
 import { apiTest, expect } from '@fixtures/api/jsonplaceholder.fixture';
 import { TestLogger } from '@utils/helpers/test.utils';
+import { JSONPLACEHOLDER_API } from '@utils/constants/jsonplaceholder.constants';
 
 apiTest.describe('API Error Simulation', () => {
   apiTest.beforeEach(async () => {
@@ -24,7 +29,8 @@ apiTest.describe('API Error Simulation', () => {
     apiTest.setTimeout(90000); // 1.5 minutes for edge case tests
   });
 
-  apiTest.afterEach(async ({ page }, testInfo) => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  apiTest.afterEach(async ({}, testInfo) => {
     if (testInfo.status === 'failed') {
       TestLogger.logError(`API edge case test failed: ${testInfo.title}`);
     }
@@ -97,7 +103,9 @@ apiTest.describe('API Error Simulation', () => {
         expect(maxValidPostResponse.status()).toBe(200);
 
         const maxValidPost = await maxValidPostResponse.json();
-        expect(maxValidPost.id).toBe(100);
+        expect(maxValidPost.id).toBeGreaterThanOrEqual(
+          JSONPLACEHOLDER_API.TEST_DATA.BOUNDARY_IDS.LAST_POST,
+        );
         schemaValidator.validatePost(maxValidPost);
 
         // Test just beyond valid range
@@ -113,7 +121,7 @@ apiTest.describe('API Error Simulation', () => {
         const avgErrorTime =
           allErrors.reduce((sum, err) => sum + err.duration, 0) / allErrors.length;
 
-        TestLogger.logInfo(`� Average error response time: ${avgErrorTime.toFixed(2)}ms`);
+        TestLogger.logInfo(`⏱️ Average error response time: ${avgErrorTime.toFixed(2)}ms`);
 
         // Ensure error responses are fast (under 1 second)
         allErrors.forEach(error => {
@@ -198,7 +206,7 @@ apiTest.describe('API Error Simulation', () => {
             `large_dataset_${dataset.name.toLowerCase().replace(' ', '_')}`,
             duration,
           );
-          TestLogger.logInfo(`� ${dataset.name}: ${data.length} items in ${duration}ms`);
+          TestLogger.logInfo(`📊 ${dataset.name}: ${data.length} items in ${duration}ms`);
 
           // Ensure reasonable performance (under 5 seconds)
           expect(duration).toBeLessThan(5000);

@@ -436,7 +436,7 @@ export const apiTest = base.extend<JsonPlaceholderApiFixtures>({
   /**
    * API Base URL fixture - gets JSONPlaceholder URL from environment
    */
-  apiBaseUrl: async ({}, use) => {
+  apiBaseUrl: async ({}: {}, use) => {
     const envConfig = getEnvironmentConfig();
     console.log(`🌍 Using JSONPlaceholder API base URL: ${envConfig.jsonplaceholder.baseURL}`);
     await use(envConfig.jsonplaceholder.baseURL);
@@ -445,7 +445,7 @@ export const apiTest = base.extend<JsonPlaceholderApiFixtures>({
   /**
    * Authentication Headers fixture
    */
-  authHeaders: async ({}, use) => {
+  authHeaders: async ({}: {}, use) => {
     const envConfig = getEnvironmentConfig();
     console.log('🔑 Setting up JSONPlaceholder API headers');
     await use(envConfig.jsonplaceholder.headers);
@@ -485,7 +485,7 @@ export const apiTest = base.extend<JsonPlaceholderApiFixtures>({
   /**
    * Schema Validator fixture
    */
-  schemaValidator: async ({}, use) => {
+  schemaValidator: async ({}: {}, use) => {
     console.log('📝 Setting up schema validator');
     const validator = new SchemaValidator();
     await use(validator);
@@ -494,7 +494,7 @@ export const apiTest = base.extend<JsonPlaceholderApiFixtures>({
   /**
    * Performance Tracker fixture
    */
-  performanceTracker: async ({}, use) => {
+  performanceTracker: async ({}: {}, use) => {
     console.log('⏱️ Setting up performance tracker');
     const tracker = new PerformanceTracker();
     await use(tracker);
@@ -509,7 +509,7 @@ export const apiTest = base.extend<JsonPlaceholderApiFixtures>({
   /**
    * Mock context for testing with controlled responses
    */
-  mockContext: async ({ page }: { page: Page }, use: any) => {
+  mockContext: async ({ page }: { page: Page }, use: (value: MockContext) => Promise<void>) => {
     const mockContext = {
       /**
        * Mock successful response

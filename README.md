@@ -235,6 +235,7 @@ Configure the framework using environment variables:
 | `DEBUG`             | Enable debug logging   | `false`       | `1`, `true`        |
 | `HEADLESS`          | Override headless mode | `true`        | `false`            |
 | `SKIP_HEALTH_CHECK` | Skip API health check  | `false`       | `true`             |
+| `JSONPLACEHOLDER_URL` | JSONPlaceholder base URL | `https://jsonplaceholder.typicode.com` | `http://localhost:3000` |
 
 ### URL Configuration
 

@@ -268,7 +268,7 @@ test.describe('sauceDemo E2E Test - Complete User Journey', () => {
     inventoryPage,
     baseUrl,
     browserName,
-  }) => {
+  }, testInfo) => {
     const testName = 'Cross-Browser User Experience';
     const testDescription = `Validate consistent user experience in ${browserName} browser`;
 
@@ -314,12 +314,15 @@ test.describe('sauceDemo E2E Test - Complete User Journey', () => {
 
       // Browser-specific performance expectations - more generous timeouts for CI/CD environments
       // Adjusted to account for network latency and system load variations
+      const projectName = testInfo.project.name;
+      const currentViewport = page.viewportSize();
+      const isMobile = projectName.includes('mobile') || (currentViewport?.width ?? 0) < 768;
       const expectedMaxTime = process.env.CI
         ? 8000 // CI environments need more generous timeouts
-        : browserName === 'webkit'
-          ? 5000
-          : browserName.includes('mobile')
-            ? 6000
+        : isMobile
+          ? 6000
+          : browserName === 'webkit'
+            ? 5000
             : 4000;
 
       // Log performance for monitoring but only fail on extremely slow interactions
