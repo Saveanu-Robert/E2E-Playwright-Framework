@@ -416,8 +416,7 @@ We welcome contributions from the community! Here's how you can help:
 
 ## 📄 License
 
-This project is licensed under the **ISC License** - see the [LICENSE](LICENSE)
-file for details.
+This project is licensed under the **ISC License**.
 
 ### What This Means
 
@@ -434,9 +433,7 @@ file for details.
 
 - 📋 **Issues**:
   [Report bugs or request features](https://github.com/Saveanu-Robert/E2E-Playwright-Framework/issues)
-- 💬 **Discussions**:
-  [Ask questions and share ideas](https://github.com/Saveanu-Robert/E2E-Playwright-Framework/discussions)
-- 📖 **Documentation**: Check the `docs/` folder for detailed guides
+-  **Documentation**: Check the `docs/` folder for detailed guides
 
 ### Community Guidelines
 
