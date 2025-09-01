@@ -6,6 +6,7 @@ yarn-debug.log*
 yarn-error.log*
 package-lock.json
 yarn.lock
+pnpm-lock.yaml
 
 # Playwright Test Results & Reports
 /test-results/
@@ -14,6 +15,10 @@ yarn.lock
 /playwright/.cache/
 /reports/
 !/reports/.gitkeep
+test-results*/
+playwright-report*/
+traces/
+downloads/
 
 # Screenshots and Videos (only keep failed test artifacts in CI)
 screenshots/
@@ -22,10 +27,9 @@ traces/
 
 # Environment Files (keep templates)
 .env
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
+.env.*
+!.env.example
+!.env.template
 
 # IDE Files
 .vscode/settings.json
@@ -91,3 +95,70 @@ local.config.js
 
 # Playwright MCP directory
 .playwright-mcp/
+
+# Additional IDE and editor files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+.atom/
+.brackets.json
+
+# Additional OS files
+.DS_Store?
+.AppleDouble
+.LSOverride
+Icon?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+[Dd]esktop.ini
+Thumbs.db
+$RECYCLE.BIN/
+
+# Additional development artifacts
+*.tgz
+*.tar.gz
+*.zip
+*.rar
+.nyc_output/
+.cache/
+.parcel-cache/
+.next/
+.nuxt/
+.vuepress/dist/
+.serverless/
+.fusebox/
+.dynamodb/
+
+# Jest
+jest-coverage/
+coverage/
+*.lcov
+
+# Storybook build outputs
+.out/
+.storybook-out/
+
+# Temporary folders
+tmp/
+temp/
+.tmp/
+.temp/
+
+# Runtime and process files
+*.pid
+*.seed
+*.pid.lock
+*.tgz
+
+# WebStorm
+.idea/
+
+# Application specific ignores
+test-results*/
+playwright-report*/
+allure-report/
+allure-results/
+mochawesome-report/
