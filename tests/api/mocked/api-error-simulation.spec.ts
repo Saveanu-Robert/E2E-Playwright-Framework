@@ -29,8 +29,7 @@ apiTest.describe('API Error Simulation', () => {
     apiTest.setTimeout(90000); // 1.5 minutes for edge case tests
   });
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  apiTest.afterEach(async ({}, testInfo) => {
+  apiTest.afterEach(async (_, testInfo) => {
     if (testInfo.status === 'failed') {
       TestLogger.logError(`API edge case test failed: ${testInfo.title}`);
     }

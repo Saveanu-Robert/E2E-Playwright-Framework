@@ -1,22 +1,135 @@
+/**
+ * @fileoverview InventoryPage - Page Object Model implementation for SauceDemo product inventory
+ * @version 1.0.0
+ * @author E2E Playwright Framework Team
+ * @since 2024
+ *
+ * @description
+ * This page object provides comprehensive interaction methods for the SauceDemo inventory/products page.
+ * It manages product listing, sorting functionality, shopping cart interactions, and product validation
+ * with mobile device compatibility and robust state management.
+ *
+ * Key Features:
+ * - Product catalog management and validation
+ * - Shopping cart interaction with button state tracking
+ * - Product sorting and filtering capabilities
+ * - Mobile device compatibility with force click options
+ * - Comprehensive product information validation
+ * - Cart badge validation and count tracking
+ * - Performance optimizations for DOM state changes
+ *
+ * @example
+ * ```typescript
+ * import { InventoryPage } from '@pages/web/InventoryPage';
+ *
+ * test('product management', async ({ page }) => {
+ *   const inventoryPage = new InventoryPage(page);
+ *   await inventoryPage.validateInventoryPageLoad();
+ *   await inventoryPage.addProductToCart(product);
+ *   await inventoryPage.validateCartItemCount(1);
+ * });
+ * ```
+ *
+ * @see {@link LoginPage} - Previous page in user flow
+ * @see {@link CartPage} - Next page in shopping flow
+ * @see {@link ../fixtures/web/saucedemo.fixture.ts} - Test fixtures
+ * @see {@link ../../data/testdata/saucedemo.products.ts} - Product test data
+ */
+
 import { expect, type Locator, type Page } from '@playwright/test';
 
 import type { ProductData } from '@data/testdata/saucedemo.products';
-
 /**
- * Page Object Model for SauceDemo Inventory/Products Page
- * Manages product listing, sorting, and shopping cart interactions
+ * InventoryPage - Manages product catalog and shopping cart interactions
+ *
+ * @description
+ * This page object encapsulates all interactions with the SauceDemo inventory/products page,
+ * providing methods for product management, cart operations, sorting, and validation.
+ * It includes mobile device compatibility and comprehensive state management for reliable testing.
+ *
+ * @example
+ * ```typescript
+ * const inventoryPage = new InventoryPage(page);
+ * await inventoryPage.addProductToCart(product);
+ * await inventoryPage.validateCartItemCount(1);
+ * ```
+ *
+ * @public
+ * @class
+ * @since 1.0.0
  */
 export class InventoryPage {
+  /**
+   * Playwright Page instance for browser interactions
+   * @readonly
+   * @public
+   */
   readonly page: Page;
+
+  /**
+   * Page title locator for validation
+   * @readonly
+   * @public
+   */
   readonly pageTitle: Locator;
+
+  /**
+   * Product sort dropdown locator
+   * @readonly
+   * @public
+   */
   readonly sortDropdown: Locator;
+
+  /**
+   * Shopping cart link locator for navigation
+   * @readonly
+   * @public
+   */
   readonly shoppingCartLink: Locator;
+
+  /**
+   * Shopping cart badge locator for item count display
+   * @readonly
+   * @public
+   */
   readonly shoppingCartBadge: Locator;
+
+  /**
+   * Menu button locator for navigation
+   * @readonly
+   * @public
+   */
   readonly menuButton: Locator;
+
+  /**
+   * Main inventory container locator for page validation
+   * @readonly
+   * @public
+   */
   readonly inventoryContainer: Locator;
 
+  /**
+   * Creates a new InventoryPage instance
+   *
+   * @description
+   * Initializes the page object with locators using robust data-test selectors
+   * for reliable element identification across different environments and browsers.
+   *
+   * @param {Page} page - Playwright Page instance for browser interactions
+   *
+   * @example
+   * ```typescript
+   * const inventoryPage = new InventoryPage(page);
+   * ```
+   *
+   * @public
+   * @constructor
+   * @since 1.0.0
+   */
   constructor(page: Page) {
     this.page = page;
+
+    // Initialize locators with robust data-test selectors
     this.pageTitle = page.locator('[data-test="title"]');
     this.sortDropdown = page.locator('[data-test="product-sort-container"]');
     this.shoppingCartLink = page.locator('[data-test="shopping-cart-link"]');
@@ -26,34 +139,89 @@ export class InventoryPage {
   }
 
   /**
-   * Validate successful navigation to inventory page
-   * Ensures page URL, title, and main container are loaded correctly
+   * Validates successful navigation and loading of the inventory page
+   *
+   * @description
+   * Performs comprehensive validation to ensure the inventory page has loaded correctly.
+   * Checks URL pattern, page title, and main container visibility to confirm page readiness.
+   *
+   * @returns {Promise<void>} Resolves when all validations pass
+   *
+   * @throws {Error} When URL, title, or container validation fails
+   *
+   * @example
+   * ```typescript
+   * await inventoryPage.validateInventoryPageLoad();
+   * ```
+   *
+   * @public
+   * @async
+   * @since 1.0.0
    */
   async validateInventoryPageLoad(): Promise<void> {
+    // Validate URL contains inventory.html
     await expect(this.page).toHaveURL(/.*inventory\.html/);
+
+    // Validate page title displays "Products"
     await expect(this.pageTitle).toHaveText('Products');
+
+    // Validate main inventory container is visible
     await expect(this.inventoryContainer).toBeVisible();
   }
 
   /**
-   * Get add to cart button for a specific product
-   * @param productId - The product identifier
+   * Retrieves the "Add to Cart" button locator for a specific product
+   *
+   * @description
+   * Creates a locator for the product's add to cart button using the data-test
+   * attribute pattern. Used internally for product cart operations.
+   *
+   * @param {string} productId - The unique product identifier/slug
+   *
+   * @returns {Locator} Playwright locator for the add to cart button
+   *
+   * @private
+   * @since 1.0.0
    */
   private getAddToCartButton(productId: string): Locator {
     return this.page.locator(`[data-test="add-to-cart-${productId}"]`);
   }
 
   /**
-   * Get remove button for a specific product
-   * @param productId - The product identifier
+   * Retrieves the "Remove" button locator for a specific product
+   *
+   * @description
+   * Creates a locator for the product's remove button using the data-test
+   * attribute pattern. Used internally for product cart operations.
+   *
+   * @param {string} productId - The unique product identifier/slug
+   *
+   * @returns {Locator} Playwright locator for the remove button
+   *
+   * @private
+   * @since 1.0.0
    */
   private getRemoveButton(productId: string): Locator {
     return this.page.locator(`[data-test="remove-${productId}"]`);
   }
 
   /**
-   * Wait for button state change from Add to Remove
-   * @param productId - The product identifier
+   * Waits for button state transition from "Add to Cart" to "Remove"
+   *
+   * @description
+   * Monitors DOM changes after adding a product to cart to ensure the button
+   * state has updated properly. Critical for mobile device compatibility and
+   * reliable test execution with proper state verification.
+   *
+   * @param {string} productId - The unique product identifier/slug
+   *
+   * @returns {Promise<void>} Resolves when button state change is complete
+   *
+   * @throws {Error} When button state change times out
+   *
+   * @private
+   * @async
+   * @since 1.0.0
    */
   private async waitForButtonStateChange(productId: string): Promise<void> {
     const addButton = this.getAddToCartButton(productId);
@@ -65,8 +233,21 @@ export class InventoryPage {
   }
 
   /**
-   * Wait for button state change from Remove back to Add to Cart
-   * @param productId - The product identifier
+   * Waits for button state transition from "Remove" back to "Add to Cart"
+   *
+   * @description
+   * Monitors DOM changes after removing a product from cart to ensure the button
+   * state has reverted properly. Includes text validation for complete state verification.
+   *
+   * @param {string} productId - The unique product identifier/slug
+   *
+   * @returns {Promise<void>} Resolves when button state restoration is complete
+   *
+   * @throws {Error} When button state restoration times out
+   *
+   * @private
+   * @async
+   * @since 1.0.0
    */
   private async waitForAddButtonRestore(productId: string): Promise<void> {
     const addButton = this.getAddToCartButton(productId);
