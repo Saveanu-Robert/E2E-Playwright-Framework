@@ -55,6 +55,8 @@ export interface EnvironmentConfig {
   web: WebConfig;
   /** API configuration */
   api: ApiConfig;
+  /** JSONPlaceholder API configuration for testing */
+  jsonplaceholder: ApiConfig;
   /** Database configuration */
   database: DatabaseConfig;
   /** Feature flags for environment-specific behavior */

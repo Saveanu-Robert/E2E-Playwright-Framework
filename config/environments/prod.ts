@@ -28,6 +28,17 @@ export const prodConfig: EnvironmentConfig = {
       'X-Environment': 'production',
     },
   },
+
+  // JSONPlaceholder API configuration for testing
+  jsonplaceholder: {
+    baseURL: process.env.JSONPLACEHOLDER_URL ?? 'https://jsonplaceholder.typicode.com',
+    timeout: FRAMEWORK_CONSTANTS.TIMEOUTS.TEST_TIMEOUT.PRODUCTION,
+    retries: FRAMEWORK_CONSTANTS.RETRIES.PRODUCTION,
+    headers: {
+      ...FRAMEWORK_CONSTANTS.DEFAULT_API_HEADERS,
+      'User-Agent': 'JSONPlaceholder-Playwright-Tests/1.0',
+    },
+  },
   database: {
     connectionString: process.env.PROD_DB_CONNECTION ?? 'mongodb://prod-db:27017/prod_db',
     timeout: 15000,

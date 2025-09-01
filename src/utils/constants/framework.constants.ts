@@ -57,6 +57,7 @@ export const FRAMEWORK_CONSTANTS = {
     INTEGRATION_API: './tests/api/integration',
     FUNCTIONAL: './tests/api/functional',
     CONTRACT: './tests/api/contract',
+    MOCKED: './tests/api/mocked',
   },
 
   // Environment Variables

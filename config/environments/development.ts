@@ -28,6 +28,17 @@ export const developmentConfig: EnvironmentConfig = {
       'X-Environment': 'development',
     },
   },
+
+  // JSONPlaceholder API configuration for testing
+  jsonplaceholder: {
+    baseURL: process.env.JSONPLACEHOLDER_URL ?? 'https://jsonplaceholder.typicode.com',
+    timeout: FRAMEWORK_CONSTANTS.TIMEOUTS.TEST_TIMEOUT.DEVELOPMENT,
+    retries: FRAMEWORK_CONSTANTS.RETRIES.DEVELOPMENT,
+    headers: {
+      ...FRAMEWORK_CONSTANTS.DEFAULT_API_HEADERS,
+      'User-Agent': 'JSONPlaceholder-Playwright-Tests/1.0',
+    },
+  },
   database: {
     connectionString: process.env.DEV_DB_CONNECTION ?? 'mongodb://localhost:27017/dev_db',
     timeout: 5000,

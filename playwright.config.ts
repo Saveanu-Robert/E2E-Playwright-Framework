@@ -222,6 +222,7 @@ export default defineConfig({
     {
       name: 'api-tests',
       testDir: FRAMEWORK_CONSTANTS.TEST_DIRS.API,
+      testIgnore: '**/mocked/**',
       use: {
         baseURL: envConfig.api.baseURL,
         extraHTTPHeaders: envConfig.api.headers,
@@ -239,6 +240,30 @@ export default defineConfig({
         category: 'api',
         platform: 'server',
         browser: 'none',
+      },
+    },
+
+    /* API Mocked Tests - Requires browser for route mocking */
+    {
+      name: 'api-mocked-tests',
+      testDir: './tests/api/mocked',
+      use: {
+        baseURL: envConfig.api.baseURL,
+        extraHTTPHeaders: envConfig.api.headers,
+
+        /* Enable browser for route mocking but minimize artifacts */
+        ...devices['Desktop Chrome'],
+        headless: true,
+        screenshot: 'off',
+        video: 'off',
+        trace: 'off',
+      },
+      timeout: envConfig.api.timeout,
+      retries: envConfig.api.retries,
+      metadata: {
+        category: 'api-mocked',
+        platform: 'browser',
+        browser: 'chromium',
       },
     },
   ],
