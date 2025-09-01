@@ -5,16 +5,20 @@
 [![Playwright](https://img.shields.io/badge/Playwright-2EAD33?logo=playwright&logoColor=white)](https://playwright.dev/)
 [![Node.js](https://img.shields.io/badge/Node.js-43853D?logo=node.js&logoColor=white)](https://nodejs.org/)
 
-> A modern, enterprise-grade end-to-end testing framework built with Microsoft Playwright. Free to use, fork, and contribute! 🚀
+> A modern, enterprise-grade end-to-end testing framework built with Microsoft
+> Playwright. Free to use, fork, and contribute! 🚀
 
 ## 🌟 About This Project
 
-This framework is **completely free and open source**! Whether you're a startup, enterprise, or individual developer, you can use this framework without any restrictions. We encourage the community to contribute, fork, and help make it even better.
+This framework is **completely free and open source**! Whether you're a startup,
+enterprise, or individual developer, you can use this framework without any
+restrictions. We encourage the community to contribute, fork, and help make it
+even better.
 
 ### 🤝 Community-Driven Development
 
 - **🆓 100% Free**: No licensing fees, no restrictions
-- **🔓 Open Source**: ISC licensed for maximum freedom  
+- **🔓 Open Source**: ISC licensed for maximum freedom
 - **🤝 Contribution Welcome**: Submit PRs, report issues, suggest features
 - **🍴 Fork Friendly**: Create your own versions and improvements
 - **📚 Learning Resource**: Great for learning modern test automation patterns
@@ -23,13 +27,16 @@ This framework is **completely free and open source**! Whether you're a startup,
 ## ✨ Key Features
 
 ### 🏗️ Architecture & Design
+
 - **🎯 TypeScript-First**: Full type safety with intelligent IntelliSense
 - **🏛️ Enterprise Architecture**: Modular, scalable, and maintainable codebase
-- **📦 Page Object Model**: Clean separation of concerns with reusable components
+- **📦 Page Object Model**: Clean separation of concerns with reusable
+  components
 - **🔌 Fixture-Based**: Powerful test fixtures for setup and teardown
 - **🛠️ Path Mapping**: Clean imports with `@src/`, `@pages/`, `@data/` aliases
 
 ### 🌐 Testing Capabilities
+
 - **🌍 Multi-Environment**: Seamless testing across Dev, Staging, and Production
 - **🖥️ Cross-Browser**: Chrome, Firefox, Safari, Edge support
 - **📱 Mobile Testing**: iPhone, Android, and Tablet simulation
@@ -37,18 +44,21 @@ This framework is **completely free and open source**! Whether you're a startup,
 - **🎭 Mocking Support**: Built-in request/response mocking capabilities
 
 ### ⚡ Performance & Optimization
+
 - **🚀 Dynamic Scaling**: Auto-calculated workers based on system resources
 - **⚖️ Load Balancing**: Intelligent test sharding for optimal execution
 - **📊 Resource Management**: Memory-aware worker allocation
 - **🎯 Parallel Execution**: Run tests across multiple browsers simultaneously
 
 ### 📸 Reporting & Debugging
+
 - **📊 Rich Reports**: HTML, JSON, and JUnit formats
 - **📸 Smart Artifacts**: Screenshots and videos for failed tests only
 - **🔍 Debug Mode**: Detailed logging and step-by-step execution
 - **📈 Performance Metrics**: Test execution timing and resource usage
 
 ### ✨ Code Quality & Maintenance
+
 - **🔧 ESLint v9**: Latest linting with flat config format
 - **💄 Prettier**: Consistent code formatting across the project
 - **🧹 Auto Cleanup**: Removes unused imports and dead code
@@ -154,7 +164,7 @@ npm run report
 # Development environment
 npm run test:dev
 
-# Pre-production environment  
+# Pre-production environment
 npm run test:pre-prod
 
 # Production environment
@@ -218,13 +228,13 @@ npm run test:sharded
 
 Configure the framework using environment variables:
 
-| Variable            | Description            | Default       | Example                    |
-| ------------------- | ---------------------- | ------------- | -------------------------- |
-| `TEST_ENV`          | Test environment       | `development` | `pre-prod`, `prod`         |
-| `CI`                | CI/CD environment flag | `false`       | `true`                     |
-| `DEBUG`             | Enable debug logging   | `false`       | `1`, `true`                |
-| `HEADLESS`          | Override headless mode | `true`        | `false`                    |
-| `SKIP_HEALTH_CHECK` | Skip API health check  | `false`       | `true`                     |
+| Variable            | Description            | Default       | Example            |
+| ------------------- | ---------------------- | ------------- | ------------------ |
+| `TEST_ENV`          | Test environment       | `development` | `pre-prod`, `prod` |
+| `CI`                | CI/CD environment flag | `false`       | `true`             |
+| `DEBUG`             | Enable debug logging   | `false`       | `1`, `true`        |
+| `HEADLESS`          | Override headless mode | `true`        | `false`            |
+| `SKIP_HEALTH_CHECK` | Skip API health check  | `false`       | `true`             |
 
 ### URL Configuration
 
@@ -317,7 +327,7 @@ npm run test -- --reporter=html,json,junit
 ### Desktop Browsers
 
 - ✅ **Chromium** (Chrome/Edge)
-- ✅ **Firefox** 
+- ✅ **Firefox**
 - ✅ **WebKit** (Safari)
 - ✅ **Microsoft Edge**
 
@@ -334,7 +344,8 @@ We welcome contributions from the community! Here's how you can help:
 ### Getting Started
 
 1. **Fork** the repository
-2. **Clone** your fork: `git clone https://github.com/YOUR_USERNAME/E2E-Playwright-Framework.git`
+2. **Clone** your fork:
+   `git clone https://github.com/YOUR_USERNAME/E2E-Playwright-Framework.git`
 3. **Create** a feature branch: `git checkout -b feature/amazing-feature`
 4. **Make** your changes
 5. **Test** your changes: `npm run test`
@@ -348,7 +359,8 @@ We welcome contributions from the community! Here's how you can help:
 - **Code Style**: Follow the existing ESLint and Prettier configuration
 - **Tests**: Add tests for new features and ensure existing tests pass
 - **Documentation**: Update README and docs for new features
-- **Commit Messages**: Use conventional commit format (`feat:`, `fix:`, `docs:`, etc.)
+- **Commit Messages**: Use conventional commit format (`feat:`, `fix:`, `docs:`,
+  etc.)
 
 ### Types of Contributions
 
@@ -361,7 +373,8 @@ We welcome contributions from the community! Here's how you can help:
 
 ## 📄 License
 
-This project is licensed under the **ISC License** - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the **ISC License** - see the [LICENSE](LICENSE)
+file for details.
 
 ### What This Means
 
@@ -376,8 +389,10 @@ This project is licensed under the **ISC License** - see the [LICENSE](LICENSE) 
 
 ### Getting Help
 
-- 📋 **Issues**: [Report bugs or request features](https://github.com/Saveanu-Robert/E2E-Playwright-Framework/issues)
-- 💬 **Discussions**: [Ask questions and share ideas](https://github.com/Saveanu-Robert/E2E-Playwright-Framework/discussions)
+- 📋 **Issues**:
+  [Report bugs or request features](https://github.com/Saveanu-Robert/E2E-Playwright-Framework/issues)
+- 💬 **Discussions**:
+  [Ask questions and share ideas](https://github.com/Saveanu-Robert/E2E-Playwright-Framework/discussions)
 - 📖 **Documentation**: Check the `docs/` folder for detailed guides
 
 ### Community Guidelines
@@ -398,8 +413,10 @@ Special thanks to:
 
 ---
 
-**Ready to start testing?** Clone this repository and run `npm install` to get started! 🚀
+**Ready to start testing?** Clone this repository and run `npm install` to get
+started! 🚀
 
 **Questions?** Open an issue and we'll help you out! 💬
 
-**Want to contribute?** We'd love your help! Check out our contribution guidelines above. 🤝
+**Want to contribute?** We'd love your help! Check out our contribution
+guidelines above. 🤝

@@ -326,7 +326,7 @@ module.exports = [
       'playwright/missing-playwright-await': 'error',
       'playwright/no-conditional-expect': 'warn',
       'playwright/no-networkidle': 'error',
-      'playwright/no-standalone-expect': 'error',
+      'playwright/no-standalone-expect': 'off', // Disabled for custom apiTest fixture
       'playwright/no-unsafe-references': 'error',
       'playwright/no-wait-for-navigation': 'error',
       'playwright/no-wait-for-selector': 'warn',
@@ -397,6 +397,8 @@ module.exports = [
     files: ['**/fixtures/**/*.{ts,js}'],
     rules: {
       'no-empty-pattern': 'off', // Playwright fixtures often use empty destructuring
+      'no-unused-vars': 'off', // Interface parameters in fixtures are often unused
+      'unused-imports/no-unused-vars': 'off', // Interface parameters in fixtures are often unused
     },
   },
 
