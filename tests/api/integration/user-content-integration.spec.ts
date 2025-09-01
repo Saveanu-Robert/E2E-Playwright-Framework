@@ -10,22 +10,7 @@
  * - Error propagation across workflows
  *
  * @fileoverview Integration tests for user content management workflows
- * @author T        // Get data from multiple sources
-        const [
-          userFromUsersEndpoint,
-          postsFromPostsEndpoint,
-          userPostsFromUserEndpoint,
-          specificPostEndpoint,
-          postCommentsFromPostEndpoint,
-          postCommentsFromCommentsEndpoint,
-        ] = await Promise.all([
-          jsonPlaceholderClient.getUser(testUserId),
-          jsonPlaceholderClient.getPosts(),
-          jsonPlaceholderClient.getUserPosts(testUserId),
-          jsonPlaceholderClient.getPost(targetPostId),
-          jsonPlaceholderClient.getPostComments(targetPostId),
-          jsonPlaceholderClient.getCommentsByPost(targetPostId),
-        ]);mework
+ * @author Test Automation Team
  * @category Integration Testing
  * @priority High (P1)
  * @since 2025-08-31

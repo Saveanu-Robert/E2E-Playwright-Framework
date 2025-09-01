@@ -246,7 +246,7 @@ export default defineConfig({
     /* API Mocked Tests - Requires browser for route mocking */
     {
       name: 'api-mocked-tests',
-      testDir: './tests/api/mocked',
+      testDir: FRAMEWORK_CONSTANTS.TEST_DIRS.MOCKED,
       use: {
         baseURL: envConfig.api.baseURL,
         extraHTTPHeaders: envConfig.api.headers,

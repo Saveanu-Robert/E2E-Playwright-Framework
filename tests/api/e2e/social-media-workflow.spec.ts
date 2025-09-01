@@ -272,9 +272,10 @@ apiTest.describe('JSONPlaceholder API - End-to-End Test Suite', () => {
       });
 
       console.log('✅ Multi-user interaction E2E test completed successfully');
+      const totalPosts = userContentData.reduce((sum, u) => sum + u.posts.length, 0);
       console.log('📈 Final Metrics:');
       console.log(`   👥 Users tested: ${testUsers.length}`);
-      console.log(`   📝 Total posts: ${userPosts.length}`);
+      console.log(`   📝 Total posts: ${totalPosts}`);
       console.log(`   💬 Total comments: ${userComments.length}`);
       console.log(`   🔗 Data integrity: 100% verified`);
     },

@@ -275,7 +275,7 @@ export const JSON_SCHEMAS = {
   POSTS_ARRAY: {
     type: 'array',
     items: {
-      $ref: '#/definitions/post',
+      $ref: '#/$defs/post',
     },
     minItems: 0,
     maxItems: 100,
@@ -284,7 +284,7 @@ export const JSON_SCHEMAS = {
   COMMENTS_ARRAY: {
     type: 'array',
     items: {
-      $ref: '#/definitions/comment',
+      $ref: '#/$defs/comment',
     },
     minItems: 0,
     maxItems: 500,
@@ -293,7 +293,7 @@ export const JSON_SCHEMAS = {
   ALBUMS_ARRAY: {
     type: 'array',
     items: {
-      $ref: '#/definitions/album',
+      $ref: '#/$defs/album',
     },
     minItems: 0,
     maxItems: 100,
@@ -302,7 +302,7 @@ export const JSON_SCHEMAS = {
   PHOTOS_ARRAY: {
     type: 'array',
     items: {
-      $ref: '#/definitions/photo',
+      $ref: '#/$defs/photo',
     },
     minItems: 0,
     maxItems: 5000,
@@ -311,7 +311,7 @@ export const JSON_SCHEMAS = {
   TODOS_ARRAY: {
     type: 'array',
     items: {
-      $ref: '#/definitions/todo',
+      $ref: '#/$defs/todo',
     },
     minItems: 0,
     maxItems: 200,
@@ -320,7 +320,7 @@ export const JSON_SCHEMAS = {
   USERS_ARRAY: {
     type: 'array',
     items: {
-      $ref: '#/definitions/user',
+      $ref: '#/$defs/user',
     },
     minItems: 0,
     maxItems: 10,
@@ -354,7 +354,7 @@ export const JSONPLACEHOLDER_SCHEMA = {
   title: 'JSONPlaceholder API Schema',
   description: 'Schema definitions for JSONPlaceholder API responses',
 
-  definitions: {
+  $defs: {
     post: JSON_SCHEMAS.POST,
     comment: JSON_SCHEMAS.COMMENT,
     album: JSON_SCHEMAS.ALBUM,
@@ -366,13 +366,13 @@ export const JSONPLACEHOLDER_SCHEMA = {
 
   // Root schema types
   oneOf: [
-    { $ref: '#/definitions/post' },
-    { $ref: '#/definitions/comment' },
-    { $ref: '#/definitions/album' },
-    { $ref: '#/definitions/photo' },
-    { $ref: '#/definitions/todo' },
-    { $ref: '#/definitions/user' },
-    { $ref: '#/definitions/error' },
+    { $ref: '#/$defs/post' },
+    { $ref: '#/$defs/comment' },
+    { $ref: '#/$defs/album' },
+    { $ref: '#/$defs/photo' },
+    { $ref: '#/$defs/todo' },
+    { $ref: '#/$defs/user' },
+    { $ref: '#/$defs/error' },
     JSON_SCHEMAS.POSTS_ARRAY,
     JSON_SCHEMAS.COMMENTS_ARRAY,
     JSON_SCHEMAS.ALBUMS_ARRAY,
